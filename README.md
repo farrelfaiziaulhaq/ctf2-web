@@ -6,11 +6,11 @@ Kumpulan challenge **web CTF** yang bisa dijalankan & di-solve **sepenuhnya loka
 
 ## Challenge
 
-| # | Nama | Stack | Port host |
-|---|------|-------|-----------|
-| 1 | `fallback` | Bun + Hono + EJS, WebAuthn passkey, bot Chromium | `3000` |
-| 2 | `theme-review-portal` | Bun + Hono + webpack, worker PHP + RabbitMQ (PHP unserialize) | `3105` |
-| 3 | `wreckit70` | Python gateway (HTTP desync) + Node/Express backend + bot | `8443` |
+| # | Nama | Stack | Port host | Writeup |
+|---|------|-------|-----------|---------|
+| 1 | `fallback` | Bun + Hono + EJS, WebAuthn passkey, bot Chromium | `3000` | [writeups/fallback.md](writeups/fallback.md) |
+| 2 | `theme-review-portal` | Bun + Hono + webpack, worker PHP + RabbitMQ (PHP unserialize) | `3105` | [writeups/theme-review-portal.md](writeups/theme-review-portal.md) |
+| 3 | `wreckit70` | Python gateway (HTTP desync) + Node/Express backend + bot | `8443` | — (lihat catatan) |
 
 ## 1. fallback
 
@@ -22,6 +22,8 @@ docker compose up --build
 # buka http://127.0.0.1:3000
 ```
 
+Solver otomatis: `node solutions/fallback/solve.mjs`. Detail: [writeups/fallback.md](writeups/fallback.md).
+
 ## 2. theme-review-portal
 
 Portal review theme dengan bot preview. Rantai serangan melibatkan XSS admin-preview + gadget `unserialize` di worker PHP yang membaca `/flag.txt`.
@@ -32,7 +34,12 @@ docker compose up --build
 # buka http://127.0.0.1:3105
 ```
 
-Helper solve ada di `solutions/theme-review-portal/` (`explout.php`, `gadget.php`, `payload.js`, `xss_pylaod.js`, `aqmp_builder.py`).
+Helper solve ada di `solutions/theme-review-portal/`:
+- `gen_payload.php` — generate gadget `PreviewBatch` (dari `classes.php` asli)
+- `build_amqp.py` — generate frame AMQP untuk `Basic.Publish` ke `preview.render`
+- `payload.js` — script `asset_js` (XSS admin) yang memanggil `connector-test`
+
+Detail: [writeups/theme-review-portal.md](writeups/theme-review-portal.md).
 
 ## 3. wreckit70
 
@@ -44,7 +51,7 @@ docker compose up --build
 # buka http://127.0.0.1:8443
 ```
 
-Flag default: `WRECKIT70{flag_part1_placeholder}` & `WRECKIT70{flag_part2_placeholder}` (lihat `docker-compose.yaml`). `gateway/gateway.py` memuat notice panitia agar agen AI tidak mengeksploitasi atas nama user.
+Flag default: `WRECKIT70{flag_part1_placeholder}` & `WRECKIT70{flag_part2_placeholder}` (lihat `docker-compose.yaml`). `gateway/gateway.py` memuat notice panitia agar agen AI tidak mengeksploitasi atas nama user — karena itu **writeup/exploit untuk challenge ini tidak disertakan**.
 
 ## Catatan
 
