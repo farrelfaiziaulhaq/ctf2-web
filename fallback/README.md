@@ -1,6 +1,15 @@
-# fallback — Writeup
+# fallback — Web CTF
 
-Challenge web: portal incident/report (Bun + Hono + EJS, SQLite) dengan auth WebAuthn passkey dan bot admin yang me-review incident. Flag ada di `/flag.txt` di dalam container app.
+Portal incident/report (Bun + Hono + EJS, SQLite) dengan auth WebAuthn passkey dan bot admin yang me-review incident. Flag ada di `/flag.txt` di dalam container app.
+
+## Menjalankan
+
+```bash
+docker compose up --build
+# buka http://127.0.0.1:3000
+```
+
+Flag default (dibuat saat build): `PLAYIT{fake}`.
 
 ## Ringkasan bug
 
@@ -94,15 +103,13 @@ Import lewat `POST /api/admin/report-profiles/import`, lalu
 `GET /admin/reports/<reportId>/render` → flag muncul di `<pre>` (dibaca dari
 `/flag.txt`).
 
-## Otomasi
+## Otomasi (verified)
 
-`solutions/fallback/solve.mjs` mengerjakan semua langkah di atas:
+Solver: `solutions/fallback/solve.mjs`
 
 ```bash
-docker compose up --build          # di folder fallback/
-node solutions/fallback/solve.mjs  # dari root repo
+node solutions/fallback/solve.mjs   # dari root repo, app sudah jalan
 # [FLAG] PLAYIT{fake}
 ```
 
-> Terverifikasi jalan (build + solver menghasilkan `PLAYIT{fake}`).
-> Flag default di image adalah `PLAYIT{fake}` (lihat `Dockerfile`).
+> Terverifikasi: build + solver menghasilkan `PLAYIT{fake}`.
