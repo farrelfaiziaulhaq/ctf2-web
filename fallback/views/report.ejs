@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>View <%= profile.id %></title>
+  <link rel="stylesheet" href="/static/app.css">
+</head>
+<body>
+  <main class="shell">
+    <section class="panel">
+      <p class="eyebrow">View</p>
+      <h1><%= profile.name %></h1>
+      <table class="report-table">
+        <tbody>
+          <% for (const row of rows) { %>
+            <tr><td><%= row %></td></tr>
+          <% } %>
+        </tbody>
+      </table>
+      <pre class="status" role="status" aria-live="polite"><%= computedFooter %></pre>
+      <p class="muted"><a href="/dashboard">Back to dashboard</a></p>
+    </section>
+  </main>
+</body>
+</html>

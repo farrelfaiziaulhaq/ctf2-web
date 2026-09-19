@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin Review Queue</title>
+  <link rel="stylesheet" href="/static/app.css">
+</head>
+<body>
+  <main class="shell">
+    <section class="panel">
+      <p class="eyebrow">Admin queue</p>
+      <h1>Pending reviews</h1>
+      <ul class="list">
+        <% for (const incident of incidents) { %>
+          <li><a href="/admin/reviews/<%= incident.id %>">#<%= incident.id %> <%= incident.title %></a></li>
+        <% } %>
+      </ul>
+      <p class="muted"><a href="/dashboard">Back to dashboard</a></p>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,16 @@
+services:
+  app:
+    build: .
+    container_name: fallback
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: "3000"
+      APP_ORIGIN: "http://127.0.0.1:3000"
+      CHROMIUM_PATH: "/usr/bin/chromium"
+      FLAG_PATH: "/flag.txt"
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:3000/healthz"]
+      interval: 15s
+      timeout: 3s
+      retries: 5

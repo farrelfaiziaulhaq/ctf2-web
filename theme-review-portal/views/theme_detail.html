@@ -1,0 +1,16 @@
+{{notice}}
+<section class="split">
+  <div class="panel">
+    <h2>Review configuration</h2>
+    <pre>{{query}}</pre>
+  </div>
+  <aside class="panel">
+    <h2>Review receipt</h2>
+    <p><b>Status</b><br>{{status}}</p>
+    <p><b>Reference</b><br>{{callback}}</p>
+    <p><b>Review notes</b><br>Attached to this entry.</p>
+    <form method="post" action="/api/themes/{{theme_id}}/report">
+      <button class="button-primary" type="submit">Submit for review</button>
+    </form>
+  </aside>
+</section>

@@ -1,0 +1,46 @@
+{{notice}}
+<section class="split">
+  <form class="panel" method="post" action="/api/themes">
+    <h2>New theme entry</h2>
+    <p class="hint section-note">Add the review details for this theme. Optional fields can be completed later.</p>
+    <div class="field-grid">
+      <div class="field-group field--wide">
+        <p class="group-label">Identity</p>
+      </div>
+      <div class="field">
+        <label for="name">Theme name</label>
+        <input id="name" name="name" placeholder="preview theme" aria-describedby="name_hint">
+        <p class="hint" id="name_hint">Optional. Defaults to "theme review".</p>
+      </div>
+      <div class="field">
+        <label for="callback_url">Reference URL</label>
+        <input id="callback_url" name="callback_url" inputmode="url" placeholder="https://example.com/reference" aria-describedby="callback_hint">
+        <p class="hint" id="callback_hint">Optional reference for reviewers.</p>
+      </div>
+      <div class="field-group field--wide">
+        <p class="group-label">Configuration</p>
+      </div>
+      <div class="field field--wide">
+        <label for="query">Review configuration</label>
+        <textarea id="query" name="query" rows="8" spellcheck="false" placeholder="mode=default" aria-describedby="query_hint"></textarea>
+        <p class="hint" id="query_hint">Optional configuration details for the review entry.</p>
+      </div>
+      <div class="field-group field--wide">
+        <p class="group-label">Additional details</p>
+      </div>
+      <div class="field field--wide">
+        <label for="asset_js">Review notes</label>
+        <textarea id="asset_js" name="asset_js" rows="10" spellcheck="false" placeholder="Additional context for reviewers" aria-describedby="asset_hint"></textarea>
+        <p class="hint" id="asset_hint">Optional notes included with the review entry.</p>
+      </div>
+    </div>
+    <div class="form-actions">
+      <button class="button-primary" type="submit">Create review</button>
+    </div>
+  </form>
+  <aside class="panel">
+    <h2>Your themes</h2>
+    <p class="hint section-note">Created entries appear here. Submit one when it is ready for review.</p>
+    <ul class="theme-list">{{theme_items}}</ul>
+  </aside>
+</section>

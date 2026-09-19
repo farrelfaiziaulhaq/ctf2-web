@@ -1,0 +1,14 @@
+node_modules/
+dist/
+build/
+vendor/
+*.log
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+.DS_Store
+__pycache__/
+*.pyc
+cookies.txt
+*.ovpn
+.env

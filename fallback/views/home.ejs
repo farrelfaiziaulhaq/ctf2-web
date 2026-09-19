@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fallback</title>
+  <link rel="stylesheet" href="/static/app.css">
+</head>
+<body class="home-page">
+  <main class="home-shell">
+    <section class="hero home-hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Fallback</p>
+        <h1>Case review.</h1>
+        <p class="lede">Create. Review. Track.</p>
+        <div class="actions">
+          <% if (currentUser) { %>
+            <a class="button" href="/dashboard">Dashboard</a>
+          <% } else { %>
+            <a class="button" href="/login">Standard sign-in</a>
+            <a class="button ghost" href="/login/passkey">Secure sign-in</a>
+            <a class="button ghost" href="/register">Create account</a>
+          <% } %>
+        </div>
+      </div>
+      <div class="review-mark" aria-hidden="true">
+        <span class="review-line hot"></span>
+        <span class="review-line"></span>
+        <span class="review-line short"></span>
+        <span class="review-node"></span>
+        <span class="review-line mute"></span>
+        <span class="review-line short hot"></span>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

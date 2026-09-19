@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunktheme_review_portal=self.webpackChunktheme_review_portal||[]).push([[852],{852:(e,t,r)=>{r.r(t);const s=document.getElementById("status");s&&(s.textContent="review ready")}}]);

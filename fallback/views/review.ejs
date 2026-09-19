@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Review #<%= incident.id %></title>
+  <link rel="stylesheet" href="/static/app.css">
+</head>
+<body>
+  <main class="shell">
+    <section class="panel">
+      <p class="eyebrow">Admin review</p>
+      <h1>#<%= incident.id %> <%= incident.title %></h1>
+      <div class="incident-body"><%- incident.body_html %></div>
+      <p class="muted"><a href="/admin/reviews">Back to queue</a></p>
+    </section>
+  </main>
+  <script src="/static/review-loader.js"></script>
+</body>
+</html>

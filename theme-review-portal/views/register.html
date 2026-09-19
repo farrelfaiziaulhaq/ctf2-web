@@ -1,0 +1,17 @@
+<form class="panel auth-shell" method="post" action="/register">
+  {{error}}
+  <div class="field">
+    <label for="username">Username</label>
+    <input id="username" name="username" autocomplete="username" placeholder="player" value="{{username}}" required aria-describedby="username_hint">
+    <p class="hint" id="username_hint">Required and unique.</p>
+  </div>
+  <div class="field">
+    <label for="password">Password</label>
+    <input id="password" type="password" name="password" autocomplete="new-password" placeholder="choose a password" required aria-describedby="password_hint">
+    <p class="hint" id="password_hint">Required.</p>
+  </div>
+  <div class="form-actions">
+    <button class="button-primary" type="submit">Create account</button>
+    <a class="button button-ghost" href="/login">Sign in</a>
+  </div>
+</form>

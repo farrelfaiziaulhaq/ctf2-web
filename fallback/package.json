@@ -1,0 +1,17 @@
+{
+  "name": "fallback",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "bun --watch src/server.ts",
+    "start": "bun run src/server.ts",
+    "bot": "bun run src/bot.ts",
+    "seed": "bun run src/server.ts --seed-only"
+  },
+  "dependencies": {
+    "ejs": "3.1.10",
+    "hono": "4.12.22",
+    "puppeteer-core": "24.10.2"
+  }
+}

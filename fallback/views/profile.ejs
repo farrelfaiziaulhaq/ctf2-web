@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Profile</title>
+  <link rel="stylesheet" href="/static/app.css">
+</head>
+<body>
+  <main class="shell">
+    <section class="panel">
+      <p class="eyebrow">User <code><%= currentUser.username %></code></p>
+      <h1>Security settings</h1>
+      <div class="actions">
+        <button id="register-passkey" class="button" type="button">Add secure sign-in</button>
+        <a class="button ghost" href="/dashboard">Back to dashboard</a>
+      </div>
+      <pre id="passkey-status" class="status" role="status" aria-live="polite" hidden></pre>
+    </section>
+
+    <section class="panel">
+      <h2>Registered devices</h2>
+      <ul class="list">
+        <% passkeys.forEach((passkey, index) => { %>
+          <li>Device <%= index + 1 %> <span class="muted"><%= passkey.createdAt %></span></li>
+        <% } %>
+      </ul>
+    </section>
+  </main>
+  <script src="/static/passkeys.js"></script>
+  <script>
+    window.setupPasskeyRegistration();
+  </script>
+</body>
+</html>

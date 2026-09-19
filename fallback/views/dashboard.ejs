@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="/static/app.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Signed in as <code><%= currentUser.username %></code></p>
+        <h1>Dashboard</h1>
+      </div>
+      <form method="post" action="/logout">
+        <button class="button ghost" type="submit">Logout</button>
+      </form>
+    </header>
+
+    <section class="dashboard-layout">
+      <article class="panel primary-panel">
+        <h2>Create record</h2>
+        <form id="incident-form" class="stack">
+          <label>Title <input name="title" required></label>
+          <label>Destination
+            <select name="queue">
+              <option value="personal">standard</option>
+              <% if (currentUser.role === "admin") { %>
+                <option value="admin-review">priority</option>
+              <% } %>
+            </select>
+          </label>
+          <label>Details <textarea name="body" rows="7" required></textarea></label>
+          <button class="button" type="submit">Create record</button>
+        </form>
+        <pre id="incident-status" class="status" role="status" aria-live="polite">Ready to submit.</pre>
+      </article>
+
+      <aside class="panel support-panel">
+        <h2>Security</h2>
+        <p>Registered devices: <strong><%= passkeyCount %></strong></p>
+        <div class="actions">
+          <a class="button" href="/dashboard/profile">Security settings</a>
+          <a class="button ghost" href="/bot/review">Automated review</a>
+        </div>
+        <% if (currentUser.role === "admin") { %>
+          <p class="muted">Saved views: <%= reports.length %></p>
+          <% if (authLevel !== "passkey") { %>
+            <p class="muted">Saved views require secure sign-in.</p>
+          <% } else { %>
+            <p class="muted"><a href="/admin/reports">Manage saved views</a></p>
+          <% } %>
+          <p class="muted"><a href="/admin/reviews">Open priority review</a></p>
+        <% } %>
+      </aside>
+    </section>
+
+    <section class="grid two">
+      <article class="panel">
+        <h2>Your records</h2>
+        <% if (incidents.length) { %>
+          <ol class="plain-list">
+            <% for (const incident of incidents) { %>
+              <li>
+                <span><strong>#<%= incident.id %></strong> <%= incident.title %></span>
+                <span class="muted"><%= incident.queue === "admin-review" ? "priority" : "standard" %></span>
+              </li>
+            <% } %>
+          </ol>
+        <% } else { %>
+          <p class="muted">No records yet.</p>
+        <% } %>
+      </article>
+
+      <% if (currentUser.role === "admin") { %>
+        <article class="panel">
+          <h2>Priority review</h2>
+          <% if (adminQueue.length) { %>
+            <ol class="plain-list">
+              <% for (const incident of adminQueue) { %>
+                <li><a href="/admin/reviews/<%= incident.id %>">#<%= incident.id %> <%= incident.title %></a></li>
+              <% } %>
+            </ol>
+          <% } else { %>
+            <p class="muted">No pending items.</p>
+          <% } %>
+        </article>
+      <% } %>
+    </section>
+  </main>
+  <script src="/static/app.js"></script>
+</body>
+</html>

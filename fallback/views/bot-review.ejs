@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Automated Review</title>
+  <link rel="stylesheet" href="/static/app.css">
+</head>
+<body>
+  <main class="shell task-shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Automation</p>
+        <h1>Automated review</h1>
+      </div>
+      <a class="button ghost" href="/dashboard">Back to dashboard</a>
+    </header>
+
+    <section class="task-layout">
+      <article class="panel primary-panel">
+        <h2>Request review</h2>
+        <form method="post" action="/bot/visit" class="stack form-compact">
+          <label>Record ID <input name="incidentId" inputmode="numeric" required></label>
+          <button class="button" type="submit">Start review</button>
+        </form>
+        <% if (submittedIncidentId) { %>
+          <p class="status inline-status" role="status" aria-live="polite">Review queued for record <code>#<%= submittedIncidentId %></code>.</p>
+        <% } %>
+      </article>
+
+      <aside class="panel support-panel">
+        <h2>Your records</h2>
+        <% if (incidents.length) { %>
+          <ol class="plain-list">
+            <% for (const incident of incidents) { %>
+              <li>
+                <span><strong>#<%= incident.id %></strong> <%= incident.title %></span>
+                <span class="muted"><%= incident.queue === "admin-review" ? "priority" : "standard" %></span>
+              </li>
+            <% } %>
+          </ol>
+        <% } else { %>
+          <p class="muted">No records yet.</p>
+        <% } %>
+      </aside>
+    </section>
+  </main>
+</body>
+</html>

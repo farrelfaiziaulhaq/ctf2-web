@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Saved Views</title>
+  <link rel="stylesheet" href="/static/app.css">
+</head>
+<body>
+  <main class="shell task-shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Admin</p>
+        <h1>Saved views</h1>
+      </div>
+      <a class="button ghost" href="/dashboard">Back to dashboard</a>
+    </header>
+
+    <section class="task-layout">
+      <article class="panel primary-panel">
+        <h2>Import view</h2>
+        <form id="report-form" class="stack">
+          <label>Label <input name="name" value="Imported view"></label>
+          <label>View settings <textarea name="config" rows="5">{"title":"Operations view","rows":["Open items","Recent activity","Backlog"]}</textarea></label>
+          <label>Optional overrides <textarea name="compatPatch" rows="6">{}</textarea></label>
+          <button class="button" type="submit">Import view</button>
+        </form>
+        <pre id="report-status" class="status" role="status" aria-live="polite">View import is available.</pre>
+      </article>
+
+      <aside class="panel support-panel">
+        <h2>Saved views</h2>
+        <% if (reports.length) { %>
+          <ol class="plain-list">
+            <% for (const report of reports) { %>
+              <li><a href="/admin/reports/<%= report.id %>/render">#<%= report.id %> <%= report.name %></a></li>
+            <% } %>
+          </ol>
+        <% } else { %>
+          <p class="muted">No saved views.</p>
+        <% } %>
+      </aside>
+    </section>
+  </main>
+  <script src="/static/app.js"></script>
+</body>
+</html>

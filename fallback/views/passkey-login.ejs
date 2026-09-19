@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Secure Sign-In</title>
+  <link rel="stylesheet" href="/static/app.css">
+</head>
+<body>
+  <main class="shell narrow">
+    <section class="panel">
+      <h1>Secure sign-in</h1>
+      <form id="passkey-login-form" class="stack">
+        <label>Username or email <input id="passkey-username" name="username" required></label>
+        <button class="button" type="submit">Continue</button>
+      </form>
+      <pre id="passkey-status" class="status" role="status" aria-live="polite" hidden></pre>
+      <p class="muted"><a href="/login">Back to standard sign-in</a></p>
+    </section>
+  </main>
+  <script src="/static/passkeys.js"></script>
+  <script>
+    window.setupPasskeyLogin();
+  </script>
+</body>
+</html>

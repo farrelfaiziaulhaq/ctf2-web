@@ -1,0 +1,20 @@
+{
+  "name": "theme-review-portal",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "webpack --config webpack.config.cjs",
+    "start": "bun run src/server.ts",
+    "bot": "bun run src/bot.ts"
+  },
+  "dependencies": {
+    "hono": "4.12.22",
+    "jquery-deparam": "0.5.1",
+    "puppeteer-core": "24.10.2"
+  },
+  "devDependencies": {
+    "webpack": "5.93.0",
+    "webpack-cli": "5.1.4"
+  }
+}

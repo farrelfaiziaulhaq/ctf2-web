@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin Review #{{theme_id}}</title>
+  <meta name="csrf-token" content="{{csrf_token}}">
+  <link rel="stylesheet" href="/static/app.css">
+</head>
+<body data-theme-id="{{theme_id}}">
+  <main>
+    <nav class="topbar">
+      <a class="brand" href="/"><span class="brand-mark">tr</span>Theme Review</a>
+      <div class="nav-actions"><span class="nav-user">logged in as <b>{{username}}</b> ({{role}})</span></div>
+    </nav>
+    <header class="page-header">
+      <h1>Admin Review #{{theme_id}}</h1>
+      <p class="lede">Internal review page for submitted theme entries.</p>
+    </header>
+    <section class="split">
+      <div class="panel">
+        <h2>Review preview</h2>
+        <p id="status" class="status" role="status" aria-live="polite">loading review preview</p>
+        <article id="preview"></article>
+      </div>
+      <aside class="panel">
+        <h2>Review metadata</h2>
+        <p><b>Reference</b><br>{{callback}}</p>
+        <p><b>Status</b><br>Available for moderator review.</p>
+      </aside>
+    </section>
+  </main>
+
+  <script nonce="{{nonce}}">
+    window.__BOOTSTRAP__ = {
+      themeId: {{theme_id_json}},
+      csrfToken: {{csrf_token_json}}
+    };
+  </script>
+
+  <script nonce="{{nonce}}" src="/vendor/jquery-deparam/jquery-deparam.js"></script>
+
+  <script nonce="{{nonce}}">
+    const opts = deparam(location.search.slice(1));
+    const previewConfig = {
+      mode: typeof opts.mode === "string" ? opts.mode : "default"
+    };
+    const preview = document.getElementById("preview");
+
+    preview.innerHTML = typeof previewConfig.html === "string"
+      ? previewConfig.html
+      : "<p>no preview override</p>";
+
+    const bundle = document.createElement("script");
+    bundle.src = "/static/review.bundle.js";
+    bundle.nonce = "{{nonce}}";
+    document.body.appendChild(bundle);
+  </script>
+</body>
+</html>

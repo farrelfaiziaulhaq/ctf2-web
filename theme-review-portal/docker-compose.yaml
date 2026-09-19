@@ -1,0 +1,24 @@
+services:
+  app:
+    build: .
+    ports:
+      - "3105:3000"
+    environment:
+      PORT: "3000"
+      APP_ORIGIN: "http://127.0.0.1:3000"
+      CHROMIUM_PATH: "/usr/bin/chromium"
+  rabbitmq:
+    image: rabbitmq:4-management
+    environment:
+      RABBITMQ_DEFAULT_USER: "produser"
+      RABBITMQ_DEFAULT_PASS: "Password123"
+  worker:
+    build:
+      context: .
+      dockerfile: worker-php/Dockerfile
+    environment:
+      RABBIT_HOST: "rabbitmq"
+      RABBIT_USER: "produser"
+      RABBIT_PASS: "Password123"
+    depends_on:
+      - rabbitmq
