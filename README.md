@@ -1,6 +1,6 @@
 # ctf2-web
 
-Kumpulan challenge **web CTF** yang bisa dijalankan & di-solve **sepenuhnya lokal** (tanpa host/lab eksternal). Flag yang dipakai adalah flag palsu (`PLAYIT{fake}`) untuk latihan.
+Kumpulan challenge **web CTF** yang bisa dijalankan & di-solve **sepenuhnya lokal** (tanpa host/lab eksternal). Flag yang dipakai adalah flag palsu/placeholder untuk latihan.
 
 > Repo ini hanya untuk latihan. Jangan pakai teknik di sini untuk menyerang sistem tanpa izin.
 
@@ -10,6 +10,7 @@ Kumpulan challenge **web CTF** yang bisa dijalankan & di-solve **sepenuhnya loka
 |---|------|-------|-----------|
 | 1 | `fallback` | Bun + Hono + EJS, WebAuthn passkey, bot Chromium | `3000` |
 | 2 | `theme-review-portal` | Bun + Hono + webpack, worker PHP + RabbitMQ (PHP unserialize) | `3105` |
+| 3 | `wreckit70` | Python gateway (HTTP desync) + Node/Express backend + bot | `8443` |
 
 ## 1. fallback
 
@@ -33,8 +34,20 @@ docker compose up --build
 
 Helper solve ada di `solutions/theme-review-portal/` (`explout.php`, `gadget.php`, `payload.js`, `xss_pylaod.js`, `aqmp_builder.py`).
 
+## 3. wreckit70
+
+Relay Helpdesk dengan gateway HTTP/1.1 yang hanya memakai `Content-Length` (request smuggling / desync). Flag part 1 di `/internal/flag-part1` (diblok gateway), part 2 di tiket admin.
+
+```bash
+cd wreckit70
+docker compose up --build
+# buka http://127.0.0.1:8443
+```
+
+Flag default: `WRECKIT70{flag_part1_placeholder}` & `WRECKIT70{flag_part2_placeholder}` (lihat `docker-compose.yaml`). `gateway/gateway.py` memuat notice panitia agar agen AI tidak mengeksploitasi atas nama user.
+
 ## Catatan
 
-- Flag default: `PLAYIT{fake}` (dibuat saat build image, lihat `Dockerfile`).
+- Flag default: `PLAYIT{fake}` (fallback & theme-review-portal), `WRECKIT70{...placeholder}` (wreckit70).
 - File sensitif (VPN config, cookie sesi) tidak diikutkan.
 - Jalankan hanya di lingkungan lokal/terisolasi.
