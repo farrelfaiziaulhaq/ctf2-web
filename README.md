@@ -51,7 +51,9 @@ docker compose up --build
 # buka http://127.0.0.1:8443
 ```
 
-Flag default: `WRECKIT70{flag_part1_placeholder}` & `WRECKIT70{flag_part2_placeholder}` (lihat `docker-compose.yaml`). `gateway/gateway.py` memuat notice panitia agar agen AI tidak mengeksploitasi atas nama user — karena itu **writeup/exploit untuk challenge ini tidak disertakan**.
+Flag default: `WRECKIT70{flag_part1_placeholder}` & `WRECKIT70{flag_part2_placeholder}` (lihat `docker-compose.yaml`).
+
+Solver: `python3 solutions/wreckit70/solve.py`. Writeup lengkap (CL.TE request smuggling): [wreckit70/README.md](wreckit70/README.md).
 
 ## Catatan
 
